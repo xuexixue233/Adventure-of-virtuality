@@ -1,32 +1,30 @@
 ﻿using AoV;
 using GameFramework.UI;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityGameFramework.Runtime;
 
 namespace AoV
 {
     public class MenuForm : UGuiForm
     {
-        [SerializeField]
-        private GameObject m_StartButton = null;
-        private GameObject m_QuitButton = null;
+
+        public Button m_StartButton = null;
+        public Button m_LoadButton = null;
+        public Button m_QuitButton = null;
 
         private ProcedureMenu m_ProcedureMenu = null;
 
-        public void OnStartButtonClick()
+        private void OnStartButtonClick()
         {
             m_ProcedureMenu.StartGame();
         }
 
-        public void OnSettingButtonClick()
+        private void OnLoadButtonClick()
         {
-            //GameEntry.UI.OpenUIForm(UIFormId.SettingForm);
+            //m_ProcedureMenu.LoadGame();
         }
 
-        public void OnAboutButtonClick()
-        {
-            //GameEntry.UI.OpenUIForm(UIFormId.AboutForm);
-        }
 
         public void OnQuitButtonClick()
         {
@@ -66,6 +64,16 @@ namespace AoV
             m_ProcedureMenu = null;
 
             base.OnClose(isShutdown, userData);
+        }
+        protected override void OnInit(object userData)
+        {
+            base.OnInit(userData);
+
+            //添加按钮事件
+            m_StartButton.onClick.AddListener(OnStartButtonClick);
+            m_LoadButton.onClick.AddListener(OnLoadButtonClick);
+            m_QuitButton.onClick.AddListener(OnQuitButtonClick);
+
         }
     }
 }

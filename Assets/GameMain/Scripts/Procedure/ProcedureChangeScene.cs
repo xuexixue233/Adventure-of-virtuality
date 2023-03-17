@@ -90,7 +90,7 @@ namespace AoV
             }
             else
             {
-                //ChangeState<ProcedureMain>(procedureOwner);
+                ChangeState<ProcedureMain>(procedureOwner);
             }
         }
 

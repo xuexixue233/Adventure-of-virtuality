@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 2134723581900713841}
   - component: {fileID: 2134723581900713840}
   - component: {fileID: 2134723581900713847}
-  - component: {fileID: 2205555466142207671}
+  - component: {fileID: 4680051385914010832}
   m_Layer: 5
   m_Name: MenuForm
   m_TagString: Untagged
@@ -164,8 +164,8 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1920, y: 1080.5797}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
 --- !u!223 &2134723581900713841
 Canvas:
   m_ObjectHideFlags: 0
@@ -175,7 +175,7 @@ Canvas:
   m_GameObject: {fileID: 2134723581900713846}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 1
@@ -227,7 +227,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &2205555466142207671
+--- !u!114 &4680051385914010832
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -239,7 +239,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10bcc5f019d38da4cb55a9a10d80c841, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_StartButton: {fileID: 2134723582749480031}
+  m_StartButton: {fileID: 2134723582749480025}
+  m_LoadButton: {fileID: 2134723582119389306}
+  m_QuitButton: {fileID: 2134723581722740761}
 --- !u!1 &2134723581974214932
 GameObject:
   m_ObjectHideFlags: 0
@@ -251,7 +253,6 @@ GameObject:
   - component: {fileID: 2134723581974214933}
   - component: {fileID: 2134723581974214935}
   - component: {fileID: 2134723581974214934}
-  - component: {fileID: 2134723581974214928}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -276,8 +277,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 194}
-  m_SizeDelta: {x: 800, y: 460}
+  m_AnchoredPosition: {x: 0.5, y: 194}
+  m_SizeDelta: {x: 799, y: 459}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2134723581974214935
 CanvasRenderer:
@@ -317,20 +318,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2134723581974214928
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2134723581974214932}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9a686c3ca1660647b875630a06a602f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  zhenFu: 0.1
-  HZ: 0.3
 --- !u!1 &2134723582119389304
 GameObject:
   m_ObjectHideFlags: 0

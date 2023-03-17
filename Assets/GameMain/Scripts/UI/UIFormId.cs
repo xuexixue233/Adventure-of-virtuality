@@ -17,14 +17,5 @@ namespace AoV
         /// </summary>
         MenuForm = 100,
 
-        /// <summary>
-        /// …Ë÷√°£
-        /// </summary>
-        SettingForm = 101,
-
-        /// <summary>
-        /// πÿ”⁄°£
-        /// </summary>
-        AboutForm = 102,
     }
 }
