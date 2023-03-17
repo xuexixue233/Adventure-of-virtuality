@@ -1,0 +1,5 @@
+#	角色配置表		
+#	Id		SpawnPosition
+#	int		Vector3
+#	角色ID	备注信息	出生位置('|'隔开)
+	1000	玩家	-9.5|6|0

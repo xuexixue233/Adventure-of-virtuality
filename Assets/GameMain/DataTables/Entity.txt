@@ -1,0 +1,6 @@
+#	实体置表		
+#	Id	AssetName	
+#	int	string	
+#	实体Id	资源名称	备注
+	1000	Character	玩家
+	2001	Enemy		怪物
