@@ -54,7 +54,7 @@ namespace AoV
             if (m_StartGame)
             {
                 procedureOwner.SetData<VarInt32>("NextSceneId", GameEntry.Config.GetInt("Scene.Main1-1"));
-                procedureOwner.SetData<VarByte>("GameMode", (byte)GameMode.Challenge);
+                //procedureOwner.SetData<VarByte>("GameMode", (byte)GameMode.Challenge);
                 ChangeState<ProcedureChangeScene>(procedureOwner);
             }
         }

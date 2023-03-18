@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using GameFramework.Event;
+using System.Collections.Generic;
 using UnityGameFramework.Runtime;
 using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
 
@@ -12,6 +13,7 @@ namespace AoV
         //private GameBase m_CurrentGame = null;
         //private bool m_GotoMenu = false;
         //private float m_GotoMenuDelaySeconds = 0f;
+        private GameForm m_GameForm = null;
 
         public override bool UseNativeDialog
         {
@@ -44,6 +46,10 @@ namespace AoV
         {
             base.OnEnter(procedureOwner);
 
+            GameEntry.Event.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
+
+            GameEntry.UI.OpenUIForm(AssetUtility.GetUIFormAsset("GameForm"), "Default", 2, this);
+            
             //m_GotoMenu = false;
             //GameMode gameMode = (GameMode)procedureOwner.GetData<VarByte>("GameMode").Value;
             //m_CurrentGame = m_Games[gameMode];
@@ -52,11 +58,12 @@ namespace AoV
 
         protected override void OnLeave(ProcedureOwner procedureOwner, bool isShutdown)
         {
-            //if (m_CurrentGame != null)
-            //{
-            //    m_CurrentGame.Shutdown();
-            //    m_CurrentGame = null;
-            //}
+            GameEntry.Event.Unsubscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
+            if (m_GameForm != null)
+            {
+                m_GameForm.Close(isShutdown);
+                m_GameForm = null;
+            }
 
             base.OnLeave(procedureOwner, isShutdown);
         }
@@ -83,6 +90,16 @@ namespace AoV
             //    procedureOwner.SetData<VarInt32>("NextSceneId", GameEntry.Config.GetInt("Scene.Menu"));
             //    ChangeState<ProcedureChangeScene>(procedureOwner);
             //}
+        }
+        private void OnOpenUIFormSuccess(object sender, GameEventArgs e)
+        {
+            OpenUIFormSuccessEventArgs ne = (OpenUIFormSuccessEventArgs)e;
+            if (ne.UserData != this)
+            {
+                return;
+            }
+
+            m_GameForm = (GameForm)ne.UIForm.Logic;
         }
     }
 }
