@@ -1,5 +1,6 @@
 ﻿using GameFramework.Event;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityGameFramework.Runtime;
 using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
 
@@ -49,7 +50,8 @@ namespace AoV
             GameEntry.Event.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
 
             GameEntry.UI.OpenUIForm(AssetUtility.GetUIFormAsset("GameForm"), "Default", 2, this);
-            
+
+            GameEntry.Entity.ShowPlayer();
             //m_GotoMenu = false;
             //GameMode gameMode = (GameMode)procedureOwner.GetData<VarByte>("GameMode").Value;
             //m_CurrentGame = m_Games[gameMode];

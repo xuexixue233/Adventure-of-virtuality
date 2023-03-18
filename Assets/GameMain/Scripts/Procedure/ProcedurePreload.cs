@@ -22,7 +22,9 @@ namespace AoV
 
         public static readonly string[] DataTableNames = new string[]
         {
-            "Scene"
+            "Scene",
+            "Character",
+            "Entity"
         };
 
         protected override void OnEnter(ProcedureOwner procedureOwner)

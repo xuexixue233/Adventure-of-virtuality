@@ -13,7 +13,7 @@ namespace AoV
 
         private bool m_ChangeToMenu = false;
         private bool m_IsChangeSceneComplete = false;
-        private int m_BackgroundMusicId = 0;
+        //private int m_BackgroundMusicId = 0;
 
         public override bool UseNativeDialog
         {
