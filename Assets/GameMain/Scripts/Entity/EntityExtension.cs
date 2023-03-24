@@ -22,6 +22,18 @@ namespace AoV
             //加载Entity
             GameEntry.Entity.ShowEntity<Player>(playerdata.Id, AssetUtility.GetEntityAsset(drEntity.AssetName), "DefaultGroup", playerdata);
         }
+        public static void ShowCamera(this EntityComponent entityComponent)
+        {
+            //创建玩家实体数据
+            CameraData cameradata = new CameraData(GameEntry.Entity.GenerateSerialId(), 3001);
+
+            //读取数据表Entity
+            IDataTable<DREntity> dtEntity = GameEntry.DataTable.GetDataTable<DREntity>();
+            DREntity drEntity = dtEntity.GetDataRow(cameradata.TypeId);
+
+            //加载Entity
+            GameEntry.Entity.ShowEntity<Camera>(cameradata.Id, AssetUtility.GetEntityAsset(drEntity.AssetName), "DefaultGroup", cameradata);
+        }
         private static void ShowEntity(this EntityComponent entityComponent, Type logicType, string entityGroup, int priority, EntityData data)
         {
             if (data == null)

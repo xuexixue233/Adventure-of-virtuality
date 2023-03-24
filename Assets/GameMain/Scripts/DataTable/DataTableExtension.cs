@@ -19,7 +19,6 @@ namespace AoV
                 Log.Warning("Data table name is invalid.");
                 return;
             }
-
             string[] splitedNames = dataTableName.Split('_');
             if (splitedNames.Length > 2)
             {

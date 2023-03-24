@@ -52,6 +52,7 @@ namespace AoV
             GameEntry.UI.OpenUIForm(AssetUtility.GetUIFormAsset("GameForm"), "Default", 2, this);
 
             GameEntry.Entity.ShowPlayer();
+            GameEntry.Entity.ShowCamera();
             //m_GotoMenu = false;
             //GameMode gameMode = (GameMode)procedureOwner.GetData<VarByte>("GameMode").Value;
             //m_CurrentGame = m_Games[gameMode];

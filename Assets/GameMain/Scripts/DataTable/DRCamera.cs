@@ -1,23 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using UnityEngine;
 using UnityGameFramework.Runtime;
 
 namespace AoV
 {
-    public class DRCharacter : DataRowBase
+    public class DRCamera : DataRowBase
     {
-        private int m_Id;
+        private int m_Id = 0;
+
+        /// <summary>
+        /// 获取实体编号。
+        /// </summary>
         public override int Id
         {
-            get { return m_Id; }
+            get
+            {
+                return m_Id;
+            }
         }
-        public Vector3 SpawnPosition
-        {
-            get;
-            private set;
-        }
-        public float RunSpeed;
+        public Vector3 SpawnPosition;
+
+        public string Target;
         public override bool ParseDataRow(string dataRowString, object userData)
         {
             string[] columnStrings = dataRowString.Split(DataTableExtension.DataSplitSeparators);
@@ -33,7 +39,7 @@ namespace AoV
             index++;
             string[] rowSpawnPosition = columnStrings[index++].Split('|');
             SpawnPosition = new Vector3(float.Parse(rowSpawnPosition[0]), float.Parse(rowSpawnPosition[1]), float.Parse(rowSpawnPosition[2]));
-            RunSpeed = float.Parse(columnStrings[index++]);
+            Target = columnStrings[index++];
             return true;
         }
     }

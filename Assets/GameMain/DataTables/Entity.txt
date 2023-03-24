@@ -4,3 +4,4 @@
 #	实体Id	备注	资源名称
 	1000	玩家	Character
 	2001	怪物	Enemy
+	3001	镜头	Camera

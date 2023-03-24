@@ -1,5 +1,5 @@
 #	角色配置表		
-#	Id		SpawnPosition
-#	int		Vector3
-#	角色ID	备注信息	出生位置('|'隔开)
-	1000	玩家	-180|140|0
+#	Id		SpawnPosition	RunSpeed
+#	int		Vector3			Float
+#	角色ID	备注信息	出生位置('|'隔开)	奔跑速度
+	1000	玩家	-180|140|0	100

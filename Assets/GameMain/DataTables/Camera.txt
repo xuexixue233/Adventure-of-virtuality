@@ -1,0 +1,5 @@
+#	游戏镜头表			
+#	Id	SpawnPosition	Target	
+#	int	Vector3	GameObject	
+#	镜头ID	备注	初始位置	目标对象
+	3001	主角镜头	0|0|-112	Player
