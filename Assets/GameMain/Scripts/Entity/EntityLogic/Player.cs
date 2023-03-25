@@ -1,5 +1,7 @@
+using GameFramework.Fsm;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 using UnityGameFramework.Runtime;
 
@@ -7,6 +9,7 @@ namespace AoV
 {
     public class Player : EntityLogic
     {
+        private IFsm<Player> fsm;
         private PlayerData m_PlayerData;
         protected override void OnInit(object userData)
         {
@@ -18,19 +21,23 @@ namespace AoV
         {
             base.OnShow(userData);
             m_PlayerData= userData as PlayerData;
-            if (m_PlayerData == null)
-            {
-                Log.Error("Player data is invalid.");
-                return;
-            }
-            PlayerStart();
-            runspeed=m_PlayerData.Runspeed;
+
+            myRigidbody = GetComponent<Rigidbody2D>();
+            myAnim = GetComponent<Animator>();
+            myFeet = GetComponent<BoxCollider2D>();
+
+            runspeed = m_PlayerData.Runspeed;
+
+            List<FsmState<Player>> states = new List<FsmState<Player>>() { new Player_IdleState(),new Player_WalkState(),new Player_RunState()};
+            fsm = GameEntry.Fsm.CreateFsm<Player>("Player_Fsm", this, states);
+            fsm.Start<Player_IdleState>();
+                        
         }
 
         protected override void OnUpdate(float elapseSeconds,float realElapseSeconds)
         {
             base.OnUpdate(elapseSeconds, realElapseSeconds);
-            PlayerUpdate();
+            
         }
         [Header("-- Normal --")]
         public float runspeed;
@@ -53,12 +60,7 @@ namespace AoV
         private bool isOneWayPlatform;
         private PlayerInputActions controls;
 
-        void PlayerStart()
-        {
-            myRigidbody = GetComponent<Rigidbody2D>();
-            myAnim = GetComponent<Animator>();
-            myFeet = GetComponent<BoxCollider2D>();
-        }
+
 
         // Update is called once per frame
         void PlayerUpdate()
@@ -123,7 +125,7 @@ namespace AoV
                 }
             }
         }
-        void Run()
+        public void Run()
         {
             float movedir;
             if (isQrun)
