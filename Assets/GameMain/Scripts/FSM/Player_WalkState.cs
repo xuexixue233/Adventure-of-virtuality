@@ -17,6 +17,7 @@ namespace AoV
         {
             base.OnEnter(fsm);
             _player = fsm.Owner;
+            _player.SwitchAnimation("Run");
         }
 
         protected override void OnInit(IFsm<Player> fsm)
@@ -33,14 +34,28 @@ namespace AoV
         protected override void OnUpdate(IFsm<Player> fsm, float elapseSeconds, float realElapseSeconds)
         {
             base.OnUpdate(fsm, elapseSeconds, realElapseSeconds);
+            _player.CheckGrounded();
+            _player.Trun();
             float movedir = Input.GetAxis("Horizontal");
             if (movedir != 0)
             {
-                _player.Run();
+                if (_player.isQrun)
+                {
+                    ChangeState<Player_RunState>(fsm);
+                }
+                else
+                {
+                    _player.Walk(movedir);                    
+                    _player.OneWayPlatformCheck();
+                }                
             }
             else
             {
                 ChangeState<Player_IdleState>(fsm);
+            }
+            if (Input.GetButtonDown("Jump"))
+            {
+                ChangeState<Player_JumpState>(fsm);
             }
         }
     }

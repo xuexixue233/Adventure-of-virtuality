@@ -18,6 +18,8 @@ namespace AoV
             private set;
         }
         public float RunSpeed;
+
+        public float JumpSpeed;
         public override bool ParseDataRow(string dataRowString, object userData)
         {
             string[] columnStrings = dataRowString.Split(DataTableExtension.DataSplitSeparators);
@@ -34,6 +36,7 @@ namespace AoV
             string[] rowSpawnPosition = columnStrings[index++].Split('|');
             SpawnPosition = new Vector3(float.Parse(rowSpawnPosition[0]), float.Parse(rowSpawnPosition[1]), float.Parse(rowSpawnPosition[2]));
             RunSpeed = float.Parse(columnStrings[index++]);
+            JumpSpeed = float.Parse(columnStrings[index++]);
             return true;
         }
     }

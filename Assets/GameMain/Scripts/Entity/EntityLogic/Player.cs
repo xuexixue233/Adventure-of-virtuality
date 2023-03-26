@@ -9,8 +9,30 @@ namespace AoV
 {
     public class Player : EntityLogic
     {
+
         private IFsm<Player> fsm;
         private PlayerData m_PlayerData;
+
+        [Header("-- Normal --")]
+        public float runspeed;
+        public float jumpspeed;
+        public float doublejumpspeed;
+        public float restoreTime;
+        public float skillcounterforce;
+        public GameObject attack1;
+        public GameObject attack2;
+        public GameObject attack3;
+        public ParticleSystem dust;
+        public Rigidbody2D myRigidbody;
+        public Animator myAnim;
+        private BoxCollider2D myFeet;
+        private Vector2 trans1;
+        public bool isQrun = false;
+        public static bool isLorR;
+        public bool isGround;
+        private bool canDoubleJump;
+        private bool isOneWayPlatform;
+        private PlayerInputActions controls;
         protected override void OnInit(object userData)
         {
             base.OnInit(userData);
@@ -27,8 +49,9 @@ namespace AoV
             myFeet = GetComponent<BoxCollider2D>();
 
             runspeed = m_PlayerData.Runspeed;
+            jumpspeed = m_PlayerData.Jumpspeed;
 
-            List<FsmState<Player>> states = new List<FsmState<Player>>() { new Player_IdleState(),new Player_WalkState(),new Player_RunState()};
+            List<FsmState<Player>> states = new List<FsmState<Player>>() { new Player_IdleState(),new Player_WalkState(),new Player_RunState(),new Player_JumpState(),new Player_FallState()};
             fsm = GameEntry.Fsm.CreateFsm<Player>("Player_Fsm", this, states);
             fsm.Start<Player_IdleState>();
                         
@@ -37,28 +60,8 @@ namespace AoV
         protected override void OnUpdate(float elapseSeconds,float realElapseSeconds)
         {
             base.OnUpdate(elapseSeconds, realElapseSeconds);
-            
+            PlayerUpdate();
         }
-        [Header("-- Normal --")]
-        public float runspeed;
-        public float jumpspeed;
-        public float doublejumpspeed;
-        public float restoreTime;
-        public float skillcounterforce;
-        public GameObject attack1;
-        public GameObject attack2;
-        public GameObject attack3;
-        public ParticleSystem dust;
-        private Rigidbody2D myRigidbody;
-        private Animator myAnim;
-        private BoxCollider2D myFeet;
-        private Vector2 trans1;
-        private bool isQrun = false;
-        public static bool isLorR;
-        private bool isGround;
-        private bool canDoubleJump;
-        private bool isOneWayPlatform;
-        private PlayerInputActions controls;
 
 
 
@@ -68,47 +71,35 @@ namespace AoV
             GameController.CurrentPlayer = gameObject;
 
             trans1 = transform.position;
-            if (GameController.isGameAlive == true && GameController.isGameSaying == false && PlayerHealth.isDie == false)
-            {
-                Run();
-                Filp();
-                Jump();
-                CheckGrounded();
-                SwitchAnimation();
-                OneWayPlatformCheck();
-                UseSomthing();
-            }
 
             //判断是否快跑
             if (Input.GetButtonDown("Speed"))
             {
                 isQrun = !isQrun;
             }
-            //放技能后坐力
-            if (SkillAttack.skilling)
-            {
-                if (isLorR == true)
-                {
-                    trans1.x -= skillcounterforce;
-
-                }
-                else
-                {
-                    trans1.x += skillcounterforce;
-                }
-                transform.position = trans1;
-                SkillAttack.skilling = false;
-
-            }
+            ////放技能后坐力
+            //if (SkillAttack.skilling)
+            //{
+            //    if (isLorR == true)
+            //    {
+            //        trans1.x -= skillcounterforce;
+            //    }
+            //    else
+            //    {
+            //        trans1.x += skillcounterforce;
+            //    }
+            //    transform.position = trans1;
+            //    SkillAttack.skilling = false;
+            //}
         }
-        void CheckGrounded()
+        public void CheckGrounded()
         {
             isGround = myFeet.IsTouchingLayers(LayerMask.GetMask("Ground")) ||
                  myFeet.IsTouchingLayers(LayerMask.GetMask("MovingPlatform")) ||
                  myFeet.IsTouchingLayers(LayerMask.GetMask("OneWayPlatform"));
             isOneWayPlatform = myFeet.IsTouchingLayers(LayerMask.GetMask("OneWayPlatform"));
         }
-        void Filp()
+        public void Trun()
         {
             bool playerHasXAxisSpeed = Mathf.Abs(myRigidbody.velocity.x) > Mathf.Epsilon;
             if (playerHasXAxisSpeed)
@@ -125,87 +116,64 @@ namespace AoV
                 }
             }
         }
-        public void Run()
+        public void Walk(float movedir)
         {
-            float movedir;
-            if (isQrun)
-            {
-                movedir = Input.GetAxis("Horizontal") * 3;
-            }
-            else
-            {
-                movedir = Input.GetAxis("Horizontal");
-            }
-            if (Mathf.Abs(movedir) > 0.2f)
-            {
-                bgm.playbgm = true;
-            }
+            
             myAnim.SetFloat("runSpeed", Mathf.Abs(movedir));
             Vector2 playervel = new Vector2(movedir * runspeed, myRigidbody.velocity.y);
             myRigidbody.velocity = playervel;
-            bool playerhasxaxisspeed = Mathf.Abs(myRigidbody.velocity.x) > Mathf.Epsilon;
+
+        }
+        public void Run(float movedir)
+        {
+            movedir = movedir * 3;
+            myAnim.SetFloat("runSpeed", Mathf.Abs(movedir));
+            Vector2 playervel = new Vector2(movedir * runspeed, myRigidbody.velocity.y);
+            myRigidbody.velocity = playervel;
+
+        }
+        public void Jump()
+        {
             if (isGround)
             {
-                myAnim.SetBool("run", playerhasxaxisspeed);
+                Vector2 JumpVel = new Vector2(0.0f, jumpspeed);
+                myRigidbody.velocity = Vector2.up * JumpVel;
+                canDoubleJump = true;
+            }
+            else
+            {
+                if (canDoubleJump && myAnim.GetBool("idle") == false)
+                {
+                    Vector2 doubleJumpVel = new Vector2(0.0f, doublejumpspeed);
+                    myRigidbody.velocity = Vector2.up * doubleJumpVel;
+                    canDoubleJump = false;
+                }
             }
         }
-        void Jump()
-        {
-            if (GameController.isGameAlive == true && GameController.isGameSaying == false)
-                if (Input.GetButtonDown("Jump"))
-                {
-                    if (isGround)
-                    { 
-                        myAnim.SetBool("jump", true);
-                        Vector2 JumpVel = new Vector2(0.0f, jumpspeed);
-                        myRigidbody.velocity = Vector2.up * JumpVel;
-                        canDoubleJump = true;
-                    }
-                    else
-                    {
-
-                        myAnim.SetBool("run", false);
-                        if (canDoubleJump && myAnim.GetBool("idle") == false)
-                        {
-                            myAnim.SetBool("djump", true);
-                            Vector2 doubleJumpVel = new Vector2(0.0f, doublejumpspeed);
-                            myRigidbody.velocity = Vector2.up * doubleJumpVel;
-                            canDoubleJump = false;
-                        }
-                    }
-                }
-        }
-        void SwitchAnimation()
+        public void SwitchAnimation(string State)
         {
             myAnim.SetBool("idle", false);
-            if (myAnim.GetBool("jump"))
+            myAnim.SetBool("run", false);
+            myAnim.SetBool("jump", false);
+            myAnim.SetBool("fall", false);
+            switch(State)
             {
-                if (myRigidbody.velocity.y < 0.0f)
-                {
-                    myAnim.SetBool("jump", false);
+                case "Idle":
+                    myAnim.SetBool("idle", true);
+                    break;
+                case "Run":
+                    myAnim.SetBool("run", true);
+                    break;
+                case "Jump":
+                    myAnim.SetBool("jump", true);
+                    break;
+                case "Fall":
                     myAnim.SetBool("fall", true);
-                }
+                    break;
             }
-            else if (isGround)
-            {
-                myAnim.SetBool("fall", false);
-                myAnim.SetBool("idle", true);
-            }
-            if (myAnim.GetBool("djump"))
-            {
-                if (myRigidbody.velocity.y < 0.0f)
-                {
-                    myAnim.SetBool("djump", false);
-                    myAnim.SetBool("dfall", true);
-                }
-            }
-            else if (isGround)
-            {
-                myAnim.SetBool("dfall", false);
-                myAnim.SetBool("idle", true);
-            }
+            
         }
-        void OneWayPlatformCheck()
+        public void OneWayPlatformCheck()
         {
             if (!isGround && gameObject.layer != LayerMask.NameToLayer("Player"))
             {
@@ -218,7 +186,7 @@ namespace AoV
                 Invoke("RestorePlayerLayer", restoreTime);
             }
         }
-        void RestorePlayerLayer()
+        public void RestorePlayerLayer()
         {
             if (!isGround && gameObject.layer != LayerMask.NameToLayer("Player"))
             {

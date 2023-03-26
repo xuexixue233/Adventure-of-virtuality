@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace AoV
 {
-    public class Player_RunState : FsmState<Player>
+    public class Player_FallState : FsmState<Player>
     {
         private Player _player;
         protected override void OnDestroy(IFsm<Player> fsm)
@@ -17,7 +17,8 @@ namespace AoV
         {
             base.OnEnter(fsm);
             _player = fsm.Owner;
-            _player.SwitchAnimation("Run");
+            _player.SwitchAnimation("Fall");
+            
         }
 
         protected override void OnInit(IFsm<Player> fsm)
@@ -35,28 +36,25 @@ namespace AoV
         {
             base.OnUpdate(fsm, elapseSeconds, realElapseSeconds);
             _player.CheckGrounded();
-            _player.Trun();
-            //≈–∂œ «∑ÒøÏ≈‹
-            float movedir = Input.GetAxis("Horizontal");
-            if (movedir != 0)
-            {
-                if (!_player.isQrun)
-                {
-                    ChangeState<Player_WalkState>(fsm);
-                }
-                else
-                {
-                    _player.Run(movedir);
-                    _player.OneWayPlatformCheck();
-                }
-            }
-            else
+            if (_player.isGround)
             {
                 ChangeState<Player_IdleState>(fsm);
             }
-            if (Input.GetButtonDown("Jump"))
+            else
             {
-                ChangeState<Player_JumpState>(fsm);
+                float movedir = Input.GetAxis("Horizontal");
+                if (movedir != 0)
+                {
+                    if (_player.isQrun)
+                    {
+                        _player.Run(movedir);
+                    }
+                    else
+                    {
+                        _player.Walk(movedir);
+                    }
+                    _player.OneWayPlatformCheck();
+                }
             }
         }
     }

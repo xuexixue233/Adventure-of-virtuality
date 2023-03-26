@@ -161,7 +161,7 @@ public class PlayerController : MonoBehaviour
         if (GameController.isGameAlive == true && GameController.isGameSaying == false)
             if (Input.GetButtonDown("Jump"))
             {
-            if (isGround)
+                if (isGround)
                 {
                     CreateDust();
                     myAnim.SetBool("jump", true);
@@ -169,20 +169,20 @@ public class PlayerController : MonoBehaviour
                     myRigidbody.velocity = Vector2.up * JumpVel;
                     canDoubleJump = true;
                 }
-            else
-            {
+                else
+                {
 
-                    myAnim.SetBool("run",false);
-                    if (canDoubleJump&& myAnim.GetBool("idle")==false)
+                    myAnim.SetBool("run", false);
+                    if (canDoubleJump && myAnim.GetBool("idle") == false)
                     {
                         myAnim.SetBool("djump", true);
                         CreateDust();
-                        Vector2 doubleJumpVel = new Vector2(0.0f,doublejumpspeed);
+                        Vector2 doubleJumpVel = new Vector2(0.0f, doublejumpspeed);
                         myRigidbody.velocity = Vector2.up * doubleJumpVel;
                         canDoubleJump = false;
                     }
+                }
             }
-        }
     }
     //void attack()
     //{

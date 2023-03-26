@@ -25,7 +25,6 @@ namespace AoV
         {
             base.OnShow(userData);
             m_Target = GameObject.FindGameObjectWithTag(m_CameraData.Target);
-            Log.Debug(m_CameraData.Target);
             target = m_Target.transform;
         }
 

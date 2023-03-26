@@ -7,7 +7,7 @@ namespace AoV
 {
     public class PlayerData : EntityData
     {
-        public float jumpspeed;
+        public float Jumpspeed;
         public float doublejumpspeed;
         public float restoreTime;
         public float skillcounterforce;
@@ -32,6 +32,7 @@ namespace AoV
 
             Position= drCharacter.SpawnPosition;
             Runspeed=drCharacter.RunSpeed;
+            Jumpspeed=drCharacter.JumpSpeed;
         }
         public int MaxHP;
         public float Runspeed;

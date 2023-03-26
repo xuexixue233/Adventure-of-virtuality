@@ -26,6 +26,7 @@ namespace AoV
             // 进入本状态时调用
             base.OnEnter(fsm);
             _player = fsm.Owner;
+            _player.SwitchAnimation("Idle");
 
         }
 
@@ -40,10 +41,15 @@ namespace AoV
         {
             // 本状态被轮询时调用
             base.OnUpdate(fsm, elapseSeconds, realElapseSeconds);
+            
             float movedir = Input.GetAxis("Horizontal");
             if (movedir != 0)
             {
                 ChangeState<Player_WalkState>(fsm);
+            }
+            if (Input.GetButtonDown("Jump"))
+            {
+                ChangeState<Player_JumpState>(fsm);
             }
         }
     }
