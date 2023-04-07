@@ -15,6 +15,7 @@ namespace AoV
         //private bool m_GotoMenu = false;
         //private float m_GotoMenuDelaySeconds = 0f;
         private GameForm m_GameForm = null;
+        private AsideForm m_AsideForm = null;
 
         public override bool UseNativeDialog
         {
@@ -49,10 +50,12 @@ namespace AoV
 
             GameEntry.Event.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
 
-            GameEntry.UI.OpenUIForm(AssetUtility.GetUIFormAsset("GameForm"), "Default", 2, this);
+            GameEntry.UI.OpenUIForm(AssetUtility.GetUIFormAsset("GameForm"), "Default", 1, this);
+            GameEntry.UI.OpenUIForm(AssetUtility.GetUIFormAsset("AsideForm"), "Default1", 2, this);
 
             GameEntry.Entity.ShowPlayer();
             GameEntry.Entity.ShowCamera();
+            GameEntry.Entity.ShowEnemy();
             //m_GotoMenu = false;
             //GameMode gameMode = (GameMode)procedureOwner.GetData<VarByte>("GameMode").Value;
             //m_CurrentGame = m_Games[gameMode];
@@ -67,6 +70,12 @@ namespace AoV
                 m_GameForm.Close(isShutdown);
                 m_GameForm = null;
             }
+            if (m_AsideForm != null)
+            {
+                m_AsideForm.Close(isShutdown);
+                m_AsideForm = null;
+            }
+
 
             base.OnLeave(procedureOwner, isShutdown);
         }
@@ -102,7 +111,8 @@ namespace AoV
                 return;
             }
 
-            m_GameForm = (GameForm)ne.UIForm.Logic;
+            
+            
         }
     }
 }

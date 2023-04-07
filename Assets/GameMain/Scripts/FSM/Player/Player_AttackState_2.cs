@@ -5,58 +5,51 @@ using UnityEngine;
 
 namespace AoV
 {
-    public class Player_RunState : FsmState<Player>
+    public class Player_AttackState_2 : FsmState<Player>
     {
         private Player _player;
+        AnimatorStateInfo animatorInfo;
+
+        protected override void OnInit(IFsm<Player> fsm)
+        {
+            // 创建有限状态机时调用
+            base.OnInit(fsm);
+        }
+
         protected override void OnDestroy(IFsm<Player> fsm)
         {
+            // 销毁有限状态机时调用
             base.OnDestroy(fsm);
         }
 
         protected override void OnEnter(IFsm<Player> fsm)
         {
+            // 进入本状态时调用
             base.OnEnter(fsm);
             _player = fsm.Owner;
-            _player.SwitchAnimation("Run");
-        }
-
-        protected override void OnInit(IFsm<Player> fsm)
-        {
-            base.OnInit(fsm);
+            _player.SwitchAnimation("Attack2");            
         }
 
         protected override void OnLeave(IFsm<Player> fsm, bool isShutdown)
         {
+            // 离开本状态时调用
             base.OnLeave(fsm, isShutdown);
             _player = null;
         }
 
         protected override void OnUpdate(IFsm<Player> fsm, float elapseSeconds, float realElapseSeconds)
         {
+            animatorInfo = _player.myAnim.GetCurrentAnimatorStateInfo(0);
+            // 本状态被轮询时调用
             base.OnUpdate(fsm, elapseSeconds, realElapseSeconds);
-            _player.CheckGrounded();
-            _player.Trun();
-            //判断是否快跑
-            float movedir = Input.GetAxis("Horizontal");
-            if (movedir != 0)
+            if (Input.GetMouseButtonDown(0))
             {
-                if (!_player.isQrun)
-                {
-                    ChangeState<Player_WalkState>(fsm);
-                }
-                else
-                {
-                    _player.Run(movedir);
-                    _player.OneWayPlatformCheck();
-                }
+                ChangeState<Player_AttackState_3>(fsm);
             }
-            else
+            if ((animatorInfo.normalizedTime >= 0.9f))
             {
+                _player.myAnim.SetFloat("numattack", 0);
                 ChangeState<Player_IdleState>(fsm);
-            }
-            if (Input.GetButtonDown("Jump"))
-            {
-                ChangeState<Player_JumpState>(fsm);
             }
         }
     }

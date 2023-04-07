@@ -12,6 +12,7 @@ namespace AoV
 
         private IFsm<Player> fsm;
         private PlayerData m_PlayerData;
+        public GameObject RunDust;
 
         [Header("-- Normal --")]
         public float runspeed;
@@ -19,6 +20,7 @@ namespace AoV
         public float doublejumpspeed;
         public float restoreTime;
         public float skillcounterforce;
+
         public GameObject attack1;
         public GameObject attack2;
         public GameObject attack3;
@@ -33,6 +35,7 @@ namespace AoV
         private bool canDoubleJump;
         private bool isOneWayPlatform;
         private PlayerInputActions controls;
+        AnimatorStateInfo animatorInfo;
         protected override void OnInit(object userData)
         {
             base.OnInit(userData);
@@ -47,11 +50,13 @@ namespace AoV
             myRigidbody = GetComponent<Rigidbody2D>();
             myAnim = GetComponent<Animator>();
             myFeet = GetComponent<BoxCollider2D>();
+            RunDust = transform.Find("runDust").gameObject;
 
             runspeed = m_PlayerData.Runspeed;
             jumpspeed = m_PlayerData.Jumpspeed;
 
-            List<FsmState<Player>> states = new List<FsmState<Player>>() { new Player_IdleState(),new Player_WalkState(),new Player_RunState(),new Player_JumpState(),new Player_FallState()};
+            List<FsmState<Player>> states = new List<FsmState<Player>>() { new Player_IdleState(),new Player_WalkState(),new Player_RunState(),new Player_JumpState(),new Player_FallState(),
+                                                                            new Player_AttackState_1(),new Player_AttackState_2(),new Player_AttackState_3()};
             fsm = GameEntry.Fsm.CreateFsm<Player>("Player_Fsm", this, states);
             fsm.Start<Player_IdleState>();
                         
@@ -68,9 +73,6 @@ namespace AoV
         // Update is called once per frame
         void PlayerUpdate()
         {
-            GameController.CurrentPlayer = gameObject;
-
-            trans1 = transform.position;
 
             //≈–∂œ «∑ÒøÏ≈‹
             if (Input.GetButtonDown("Speed"))
@@ -130,7 +132,7 @@ namespace AoV
             myAnim.SetFloat("runSpeed", Mathf.Abs(movedir));
             Vector2 playervel = new Vector2(movedir * runspeed, myRigidbody.velocity.y);
             myRigidbody.velocity = playervel;
-
+            
         }
         public void Jump()
         {
@@ -156,7 +158,7 @@ namespace AoV
             myAnim.SetBool("run", false);
             myAnim.SetBool("jump", false);
             myAnim.SetBool("fall", false);
-            switch(State)
+            switch (State)
             {
                 case "Idle":
                     myAnim.SetBool("idle", true);
@@ -169,6 +171,15 @@ namespace AoV
                     break;
                 case "Fall":
                     myAnim.SetBool("fall", true);
+                    break;
+                case "Attack1":
+                    myAnim.SetFloat("numattack", 1);
+                    break;
+                case "Attack2":
+                    myAnim.SetFloat("numattack", 2);
+                    break;
+                case "Attack3":
+                    myAnim.SetFloat("numattack", 3);
                     break;
             }
             

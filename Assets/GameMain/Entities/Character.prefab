@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &390606092
 Transform:
   m_ObjectHideFlags: 0
@@ -50,7 +50,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -989,26 +989,17 @@ ParticleSystem:
           outSlope: 0
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.15865256
-        - serializedVersion: 3
-          time: 0.6265002
-          value: 0.62717557
-          inSlope: -1.4006008
-          outSlope: -1.4006008
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.27292895
-          outWeight: 0.38764772
+          inWeight: 0
+          outWeight: 0
         - serializedVersion: 3
           time: 1
           value: 0
-          inSlope: -1.9043251
-          outSlope: -1.9043251
+          inSlope: -2
+          outSlope: -2
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.4758585
-          outWeight: 0.33333334
+          inWeight: 0
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
@@ -4995,11 +4986,6 @@ GameObject:
   - component: {fileID: 4255293139146665505}
   - component: {fileID: 4255293139146665507}
   - component: {fileID: 4255293139146665504}
-  - component: {fileID: 7727600515356059636}
-  - component: {fileID: 6288964148694924741}
-  - component: {fileID: 9007891004144833677}
-  - component: {fileID: 8167772294048566200}
-  - component: {fileID: 4255293139146665519}
   - component: {fileID: 4255293139146665518}
   m_Layer: 9
   m_Name: Character
@@ -5163,89 +5149,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8531493, y: 0.52268934}
   m_EdgeRadius: 0
---- !u!114 &7727600515356059636
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4255293139146665509}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ada9200dc8d7f24b8ff05a7c6f5d71c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  runspeed: 62
-  jumpspeed: 450
-  doublejumpspeed: 350
-  restoreTime: 0.2
-  skillcounterforce: 20
-  attack1: {fileID: 4255293140686968508}
-  attack2: {fileID: 1465092358}
-  attack3: {fileID: 1028060654}
-  dust: {fileID: 390606091}
---- !u!114 &6288964148694924741
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4255293139146665509}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0f16465874516b4a893a7efcdeac232, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dropConst: 250
---- !u!114 &9007891004144833677
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4255293139146665509}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6982cb6f8996c9949b1adccb12771027, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 5
-  maxHealth: 5
-  magic: 3
-  dieTime: 3
-  hittime: 0.2
-  invincibilityTime: 2
-  flashColor: {r: 0.8679245, g: 0.77441627, b: 0.289854, a: 0.4745098}
-  DieAnime: {fileID: 3532108267516929889, guid: 7283b1888306a59449e487800a2930e7, type: 3}
---- !u!114 &8167772294048566200
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4255293139146665509}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fc2b995f1b8c554e82d4a4603757647, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialog: {fileID: 0}
-  MaterialForStop: {fileID: 6200000, guid: dff98aca0e3a85a4e93f030eaa2cbc86, type: 2}
---- !u!114 &4255293139146665519
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4255293139146665509}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab20354d22400f341863951bea758a3f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  img: {fileID: 8374545722177547074, guid: a60ef32dc6cd90c4aa0abe78bea3b670, type: 3}
-  time: 0.1
-  flashColor: {r: 1, g: 1, b: 1, a: 0.47058824}
 --- !u!60 &4255293139146665518
 PolygonCollider2D:
   m_ObjectHideFlags: 0

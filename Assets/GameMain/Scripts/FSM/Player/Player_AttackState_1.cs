@@ -1,14 +1,15 @@
 using GameFramework.Fsm;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
 namespace AoV
 {
-    public class Player_IdleState : FsmState<Player>
+    public class Player_AttackState_1 : FsmState<Player>
     {
         private Player _player;
+        AnimatorStateInfo animatorInfo;
+        
         protected override void OnInit(IFsm<Player> fsm)
         {
             // 创建有限状态机时调用
@@ -26,8 +27,7 @@ namespace AoV
             // 进入本状态时调用
             base.OnEnter(fsm);
             _player = fsm.Owner;
-            _player.SwitchAnimation("Idle");
-
+            _player.SwitchAnimation("Attack1");            
         }
 
         protected override void OnLeave(IFsm<Player> fsm, bool isShutdown)
@@ -39,18 +39,19 @@ namespace AoV
 
         protected override void OnUpdate(IFsm<Player> fsm, float elapseSeconds, float realElapseSeconds)
         {
+            animatorInfo = _player.myAnim.GetCurrentAnimatorStateInfo(0);
             // 本状态被轮询时调用
             base.OnUpdate(fsm, elapseSeconds, realElapseSeconds);
-            
-            float movedir = Input.GetAxis("Horizontal");
-            if (movedir != 0)
+            if(Input.GetMouseButtonDown(0))
             {
-                ChangeState<Player_WalkState>(fsm);
+                ChangeState<Player_AttackState_2>(fsm);
             }
-            if (Input.GetButtonDown("Jump"))
+            if (animatorInfo.normalizedTime >= 0.9f)
             {
-                ChangeState<Player_JumpState>(fsm);
+                _player.myAnim.SetFloat("numattack", 0);
+                ChangeState<Player_IdleState>(fsm);
             }
         }
+        
     }
 }

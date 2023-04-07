@@ -34,6 +34,13 @@ namespace AoV
             //º”‘ÿEntity
             GameEntry.Entity.ShowEntity<Camera>(cameradata.Id, AssetUtility.GetEntityAsset(drEntity.AssetName), "DefaultGroup", cameradata);
         }
+        public static void ShowEnemy(this EntityComponent entityComponent)
+        {
+            EnemyData enemyData = new EnemyData(GameEntry.Entity.GenerateSerialId(), 2001);
+            IDataTable<DREntity> dtEntity = GameEntry.DataTable.GetDataTable<DREntity>();
+            DREntity drEntity = dtEntity.GetDataRow(enemyData.TypeId);
+            GameEntry.Entity.ShowEntity<Enemy>(enemyData.Id, AssetUtility.GetEntityAsset(drEntity.AssetName), "DefaultGroup", enemyData);
+        }
         private static void ShowEntity(this EntityComponent entityComponent, Type logicType, string entityGroup, int priority, EntityData data)
         {
             if (data == null)

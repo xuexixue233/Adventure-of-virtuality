@@ -8,6 +8,7 @@ namespace AoV
     public class Player_JumpState : FsmState<Player>
     {
         private Player _player;
+        private ParticleSystem Rundust;
         protected override void OnDestroy(IFsm<Player> fsm)
         {
             base.OnDestroy(fsm);
@@ -19,6 +20,8 @@ namespace AoV
             _player = fsm.Owner;
             _player.SwitchAnimation("Jump");
             _player.Jump();
+            Rundust = _player.RunDust.GetComponent<ParticleSystem>();
+            Rundust.Play();
         }
 
         protected override void OnInit(IFsm<Player> fsm)
@@ -36,9 +39,10 @@ namespace AoV
         {
             base.OnUpdate(fsm, elapseSeconds, realElapseSeconds);
             _player.CheckGrounded();
-            _player.Trun();
+            _player.Trun();            
             if (_player.myRigidbody.velocity.y < 0.0f)
             {
+                Rundust.Stop();
                 ChangeState<Player_FallState>(fsm);
             }
             else

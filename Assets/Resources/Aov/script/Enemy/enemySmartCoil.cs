@@ -20,7 +20,7 @@ public class enemySmartCoil : Enemy
     //public float surpisedTime;
     //public GameObject surpriseObject;
     private Transform playerTransform;
-    // Start is called before the first frame update
+
     new void Start()
     {
         base.Start();
@@ -36,7 +36,6 @@ public class enemySmartCoil : Enemy
 
     }
 
-    // Update is called once per frame
     new void Update()
     {
         base.Update();

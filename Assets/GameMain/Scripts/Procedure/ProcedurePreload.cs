@@ -25,7 +25,8 @@ namespace AoV
             "Scene",
             "Character",
             "Entity",
-            "Camera"
+            "Camera",
+            "Enemy"
         };
 
         protected override void OnEnter(ProcedureOwner procedureOwner)
