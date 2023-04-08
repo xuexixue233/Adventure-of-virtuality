@@ -24,13 +24,21 @@ namespace AoV
         //public float surpisedTime;
         //public GameObject surpriseObject;
         private Transform playerTransform;
-
+        public float AlarmRange;
+        public float AttackRange;
+        public float ChasingRange;
+        public float IdleRange;
+        
         public EnemyData(int entityId, int typeId) : base(entityId, typeId)
         {
             IDataTable<DREnemy> dtEnemy = GameEntry.DataTable.GetDataTable<DREnemy>();
             DREnemy drEnemy = dtEnemy.GetDataRow(typeId);
             Position=drEnemy.SpawnPosition;
             Speed=drEnemy.Speed;
+            AlarmRange=drEnemy.AlarmRange;
+            AttackRange=drEnemy.AttackRange;
+            ChasingRange=drEnemy.ChasingRange;
+            IdleRange=drEnemy.IdleRange;
         }
     }
 }

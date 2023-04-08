@@ -33,8 +33,7 @@ namespace AoV
         protected override void OnLeave(IFsm<Player> fsm, bool isShutdown)
         {
             // 离开本状态时调用
-            base.OnLeave(fsm, isShutdown);
-            _player.myAnim.SetFloat("numattack", 0);
+            base.OnLeave(fsm, isShutdown);            
             _player = null;
         }
 

@@ -46,7 +46,7 @@ namespace AoV
             {
                 ChangeState<Player_AttackState_2>(fsm);
             }
-            if (animatorInfo.normalizedTime >= 0.9f)
+            if (animatorInfo.normalizedTime >= 1f)
             {
                 _player.myAnim.SetFloat("numattack", 0);
                 ChangeState<Player_IdleState>(fsm);

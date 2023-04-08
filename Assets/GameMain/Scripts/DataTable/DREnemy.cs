@@ -13,6 +13,7 @@ namespace AoV
             get { return m_Id; }
         }
         public Vector3 SpawnPosition;
+        public float IdleRange;
         public float AlarmRange;
         public float ChasingRange;
         public float AttackRange;
@@ -32,7 +33,7 @@ namespace AoV
             index++;
             string[] rowSpawnPosition = columnStrings[index++].Split('|');
             SpawnPosition = new Vector3(float.Parse(rowSpawnPosition[0]), float.Parse(rowSpawnPosition[1]), float.Parse(rowSpawnPosition[2]));
-            index++;
+            IdleRange=float.Parse(columnStrings[index++]);
             ChasingRange = float.Parse(columnStrings[index++]);
             AlarmRange = float.Parse(columnStrings[index++]);
             AttackRange=float.Parse(columnStrings[index++]);
